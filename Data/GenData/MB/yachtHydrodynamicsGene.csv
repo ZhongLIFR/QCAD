@@ -1,0 +1,7 @@
+
+Beam_draught_ratio;Length_displacement_ratio;Length_beam_ratio
+Length_beam_ratio;Beam_draught_ratio;Prismatic_coefficient
+Length_beam_ratio;Length_displacement_ratio;Prismatic_coefficient
+Length_displacement_ratio;Beam_draught_ratio;Prismatic_coefficient
+resistance
+Froude_number

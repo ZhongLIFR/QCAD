@@ -1,0 +1,13 @@
+DEATH_EVENT;ejection_fraction
+high_blood_pressure;DEATH_EVENT;diabetes;anaemia;ejection_fraction
+sex
+DEATH_EVENT
+smoking;DEATH_EVENT;anaemia
+sex;DEATH_EVENT;high_blood_pressure;diabetes;ejection_fraction
+anaemia;platelets;serum_creatinine;serum_sodium;time;DEATH_EVENT;sex;high_blood_pressure
+serum_creatinine;serum_sodium;DEATH_EVENT;age;sex;high_blood_pressure
+serum_sodium;diabetes;anaemia;high_blood_pressure;sex;time
+diabetes;smoking;ejection_fraction
+anaemia;creatinine_phosphokinase;platelets;DEATH_EVENT;sex;diabetes;age
+serum_sodium;DEATH_EVENT;high_blood_pressure
+sex

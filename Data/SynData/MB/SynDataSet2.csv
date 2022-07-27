@@ -1,0 +1,10 @@
+behave_num1;behave_num2;behave_num3;behave_num4;con_num_cat0
+behave_num3;behave_num4;behave_num2;con_num_cat0
+behave_num1;behave_num2;behave_num3;behave_num4;con_num_cat0
+con_num_cat1
+con_num_cat0
+behave_num1;behave_num2;behave_num3;behave_num4;con_num_cat0
+behave_num0;behave_num2;behave_num3;behave_num4;con_num_cat0;con_num2
+behave_num0;behave_num1;behave_num3;behave_num4;con_num_cat0
+con_num_cat1;behave_num0;behave_num1;behave_num2;behave_num4;con_num1
+con_num_cat1;behave_num0;behave_num1;behave_num2;behave_num3

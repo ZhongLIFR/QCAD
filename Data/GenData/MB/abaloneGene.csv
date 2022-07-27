@@ -1,0 +1,9 @@
+Length;Diameter;Height;Whole.weight;Viscera.weight;Shucked.weight;Shell.weight;Rings
+Sex;Diameter;Height;Whole.weight;Shucked.weight;Shell.weight;Rings
+Sex;Length;Height;Whole.weight;Shucked.weight;Viscera.weight;Shell.weight
+Length;Diameter;Whole.weight;Shucked.weight;Viscera.weight;Shell.weight;Rings;Sex
+Length;Diameter;Height;Shucked.weight;Viscera.weight;Shell.weight;Rings;Sex
+Length;Diameter;Height;Whole.weight;Viscera.weight;Shell.weight;Rings;Sex
+Diameter;Height;Whole.weight;Shucked.weight;Shell.weight;Rings;Sex
+Length;Diameter;Height;Whole.weight;Shucked.weight;Viscera.weight;Rings;Sex
+Length;Height;Whole.weight;Shucked.weight;Viscera.weight;Shell.weight;Sex

@@ -1,0 +1,11 @@
+Month
+Year
+
+
+Longitude;Zonal_Winds;Meridional_Winds;Humidity;Air_Temp;Sea_Surface_Temp;Year
+Latitude;Zonal_Winds;Meridional_Winds;Humidity;Air_Temp;Sea_Surface_Temp;Year
+Latitude;Longitude;Meridional_Winds;Humidity;Air_Temp;Sea_Surface_Temp;Year
+Latitude;Longitude;Zonal_Winds;Humidity;Air_Temp;Sea_Surface_Temp;Year
+Latitude;Longitude;Zonal_Winds;Meridional_Winds;Air_Temp;Sea_Surface_Temp;Year
+Month;Day
+Month;Day

@@ -1,0 +1,13 @@
+month
+X
+Y
+X
+DMC;DC;ISI;temp;RH;wind;area;X
+FFMC;DC;temp;RH;X
+FFMC;DMC;temp;X;ISI
+FFMC;DC;temp;RH;wind;X
+FFMC;DMC;DC;ISI;RH;wind;area;X
+day;FFMC;DMC;DC;temp;rain
+day;DC;ISI;temp;area
+day;FFMC;DC;ISI;temp;RH;area
+FFMC;temp;RH;X

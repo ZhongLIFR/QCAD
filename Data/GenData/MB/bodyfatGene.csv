@@ -1,0 +1,14 @@
+Abdomen;Weight;BodyFat
+Abdomen;Weight;Thigh;Neck;Density;Forearm;Age
+Abdomen;Thigh;Knee;Neck;Weight;BodyFat
+Hip;Chest;Abdomen;Knee;Neck;Biceps;Ankle;Height;Age
+Weight;Hip;Thigh;Chest;Abdomen
+Weight;Hip;Biceps;Forearm;BodyFat;Age;Knee
+Abdomen;Weight;Hip;Thigh;Forearm;Height
+Chest;Weight;Hip;BodyFat;Density;Forearm;Ankle;Age
+Weight;Thigh;Abdomen;Chest;Neck;Height
+Hip;Knee;Biceps;Age;Height;BodyFat
+Weight;Thigh;Ankle;Age;Abdomen;Neck
+Weight;Knee;Abdomen
+Weight;Thigh;Neck;Forearm
+Biceps;Neck;Chest;Abdomen;BodyFat;Weight

@@ -1,0 +1,7 @@
+Length3;Length1;Length2;Width;Weight
+Length2;Length3;Width;Species
+Length2;Length3;Width;Species
+Length1;Length3;Species;Weight;Width
+Length2;Species;Weight;Width
+Length3;Width;Species
+Length3;Height;Species;Length1

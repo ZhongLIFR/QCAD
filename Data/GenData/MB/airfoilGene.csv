@@ -1,0 +1,6 @@
+delta;SSPL;alpha;c;U_infinity
+c;U_infinity;delta;SSPL;f
+alpha;delta;SSPL;f;U_infinity
+alpha;SSPL;c;f
+alpha;c;SSPL;f
+alpha;c;U_infinity;delta;f
