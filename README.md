@@ -7,4 +7,4 @@ the QCAD repo includes two folders, Code and Data.
 
 Specifcially, the Code folder contains the following sub-folders:
 
-- sss
+- Implementation: which includes the implementations of our algorithm ** QCAD **
