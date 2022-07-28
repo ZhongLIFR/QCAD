@@ -1,5 +1,5 @@
 # QCAD
-Paper submitted to DAMI
+Paper submitted to DAMI (Zenodo)
 
 ## Repo Structure
 
