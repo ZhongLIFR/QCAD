@@ -12,7 +12,7 @@ Specifcially, the Code folder contains the following sub-folders:
 - *Implementation*: which includes the implementations of contextual anomaly detection algorithms.
   -  **QCAD**: our own algorithm
   -  **COD**: algorithm by [Song, Xiuyao, et al. 2007](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=conditional+anomaly+detection&btnG=#d=gs_cit&t=1660120134736&u=%2Fscholar%3Fq%3Dinfo%3ANRj9x9XFmTIJ%3Ascholar.google.com%2F%26output%3Dcite%26scirp%3D0%26hl%3Den); implemented by us.
-  -  **ROCOD**, 
+  -  **ROCOD**, algorithm by [Liang, Jiongqian, and Srinivasan Parthasarathy. 2016](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=conditional+anomaly+detection&btnG=#d=gs_cit&t=1660120134736&u=%2Fscholar%3Fq%3Dinfo%3ANRj9x9XFmTIJ%3Ascholar.google.com%2F%26output%3Dcite%26scirp%3D0%26hl%3Den](https://dl.acm.org/doi/pdf/10.1145/2983323.2983660); implemented by us.
   -  **LoPAD**, 
   -  and traditional anomaly detection algorithms **PyODtest**(based on PyOD);
 - *Utilities*: which contains some utility function/scripts.
