@@ -19,4 +19,9 @@ Specifcially, the Code folder contains the following sub-folders:
 
 
 ### Data
+Specifcially, the Data folder contains the following sub-folders:
 
+- *RawData*: 20 real-world datasets without contextual anomalies (assumption)
+- *SynData*: 10 synthetic datasets withous contextual anomalies
+- *GenData*: 20 real-world datasets with injected contextual anomalies, 10 synthetic datasets with contextual anomalies, and the Markov Blankets of these 30 datasets in the subfolder ~/MB/
+- *Examples*: the football dataset with unkown real-world anomalies
