@@ -9,7 +9,12 @@ the QCAD repo includes two folders, Code and Data.
 ### Code
 Specifcially, the Code folder contains the following sub-folders:
 
-- *Implementation*: which includes the implementations of our contextual anomaly detection algorithm **QCAD**, and other SOTA contextual anomaly detection algorithms such as **COD**, **ROCOD**, **LoPAD**, and traditional anomaly detection algorithms **PyODtest**(based on PyOD);
+- *Implementation*: which includes the implementations of contextual anomaly detection algorithms.
+  -  **QCAD**: our own algorithm
+  -  **COD**: algorithm by [Song, Xiuyao, et al. 2007](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=conditional+anomaly+detection&btnG=#d=gs_cit&t=1660120134736&u=%2Fscholar%3Fq%3Dinfo%3ANRj9x9XFmTIJ%3Ascholar.google.com%2F%26output%3Dcite%26scirp%3D0%26hl%3Den); implemented by us.
+  -  **ROCOD**, 
+  -  **LoPAD**, 
+  -  and traditional anomaly detection algorithms **PyODtest**(based on PyOD);
 - *Utilities*: which contains some utility function/scripts.
   -  **SynDataGen** is used to generate synthetic datasets ;
   -  **ContextualAnomalyInject**  is used to inject contextual anomalies;
