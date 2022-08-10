@@ -12,9 +12,9 @@ Specifcially, the Code folder contains the following sub-folders:
 - *Implementation*: which includes the implementations of contextual anomaly detection algorithms.
   -  **QCAD**: our own algorithm
   -  **COD**: algorithm by [Song, Xiuyao, et al. 2007](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=conditional+anomaly+detection&btnG=#d=gs_cit&t=1660120134736&u=%2Fscholar%3Fq%3Dinfo%3ANRj9x9XFmTIJ%3Ascholar.google.com%2F%26output%3Dcite%26scirp%3D0%26hl%3Den); implemented by us.
-  -  **ROCOD**, algorithm by [Liang, Jiongqian, and Srinivasan Parthasarathy. 2016](https://dl.acm.org/doi/pdf/10.1145/2983323.2983660); implemented by us.
-  -  **LoPAD**, 
-  -  and traditional anomaly detection algorithms **PyODtest**(based on PyOD);
+  -  **ROCOD**: algorithm by [Liang, Jiongqian, and Srinivasan Parthasarathy. 2016](https://dl.acm.org/doi/pdf/10.1145/2983323.2983660); implemented by us.
+  -  **LoPAD**: algorithm by [Lu, Sha, et al.](https://link.springer.com/chapter/10.1007/978-3-030-47436-2_50); implemented by us.
+  -  **PyODtest**: other traditional anomaly detection algorithms such as KNN,LOF,SOD,IForest, HBOS, implemented by [Zhao, Yue, Zain Nasrullah, and Zheng Li., 2019](https://www.jmlr.org/papers/volume20/19-011/19-011.pdf?ref=https://githubhelp.com); API written by us.
 - *Utilities*: which contains some utility function/scripts.
   -  **SynDataGen** is used to generate synthetic datasets ;
   -  **ContextualAnomalyInject**  is used to inject contextual anomalies;
