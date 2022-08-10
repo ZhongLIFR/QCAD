@@ -33,9 +33,9 @@ Specifcially, the Code folder contains the following sub-folders:
   - **SensitivityOfNeighbours**: inspect the detection accuracy in terms of RUC AUC, PR AUC, P@n by varying the number of neighbours.
 - *MultipleRunningAverage*: which run all involved detection algothms 10 times independently.
   - **AverageTest**: execute all anomaly detection algorithms except **CAD** on 20 real-world datasets 10 times.
-  - **AverageTestCOD** execute **CAD** separately on 20 real-world datasets 10 times, since it takes a long time.
+  - **AverageTestCOD**: execute **CAD** separately on 20 real-world datasets 10 times, since it takes a long time.
   - **SynAverageTest**: execute all anomaly detection algorithms except **CAD** on 10 synthetic datasets 10 times.
-  - **SynAverageTestCOD** execute **CAD** separately on 10 synthetic datasets 10 times, since it takes a long time.
+  - **SynAverageTestCOD**: execute **CAD** separately on 10 synthetic datasets 10 times, since it takes a long time.
 
 ### Data
 Specifcially, the Data folder contains the following sub-folders:
