@@ -16,9 +16,9 @@ Specifcially, the Code folder contains the following sub-folders:
   -  **LoPAD**: algorithm proposed by [Lu, Sha, et al.](https://link.springer.com/chapter/10.1007/978-3-030-47436-2_50); implemented by us.
   -  **PyODtest**: other traditional anomaly detection algorithms such as KNN,LOF,SOD,IForest, HBOS, implemented by [Yue Zhao, Zain Nasrullah, and Zheng Li., 2019](https://www.jmlr.org/papers/volume20/19-011/19-011.pdf?ref=https://githubhelp.com); API written by us.
 - *Utilities*: which contains some utility function/scripts as follows:
-  -  **SynDataGen** is used to generate synthetic datasets ;
-  -  **ContextualAnomalyInject**  is used to inject contextual anomalies;
-  - **FindMB** (R)  is used to find Markov Blankets for the **LoPAD** algorithm;
+  -  **SynDataGen** is used to generate synthetic datasets.
+  -  **ContextualAnomalyInject**  is used to inject contextual anomalies.
+  - **FindMB** (R)  is used to find Markov Blankets for the **LoPAD** algorithm.
 - *Examples*: which contains the following scripts used to generate examples in our paper. 
   - **ExampleFootball**  is used to generate the application example;
   -  **ExampleQuantileHeight**  is used to generate the figures in Introduction section;
