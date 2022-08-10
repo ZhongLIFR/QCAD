@@ -20,7 +20,7 @@ Specifcially, the Code folder contains the following sub-folders:
   -  **ContextualAnomalyInject**: inject contextual anomalies.
   - **FindMB** (R): find Markov Blankets for the **LoPAD** algorithm.
 - *Examples*: which contains the following scripts used to generate examples in our paper. 
-  - **ExampleFootball**: generate the application example;
+  - **ExampleFootball**: generate the football application example;
   -  **ExampleQuantileHeight**: generate the figures in Introduction section;
   -   **ExampleBeanPlot**: generate the Beanplot in the Method section;
 - *AblationStuides*: (TD)
