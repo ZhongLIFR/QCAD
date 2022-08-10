@@ -25,11 +25,12 @@ Specifcially, the Code folder contains the following sub-folders:
   -   **ExampleBeanPlot**: generate the Beanplot in the Method section;
 - *AblationStuides*: which investigate the impacts of different components on detection performance.
   - **AblationStudy**: conduct two ablation stuides.
-- *RuntimeAnalysis*: which inspect the computational cost of **QCAD** and **CAD**.
+- *RuntimeAnalysis*: which inspects the computational cost of **QCAD** and **CAD**.
   - **RuntimeBehave**: inspect the running time by varying the number of behaviroual features.
   - **RuntimeContext**: inspect the running time by varying the number of contextual features.
   - **RuntimeSample**: inspect the running time by varying the number of samples.
-- *SensitivityStudies*: (TD)
+- *SensitivityStudies*: which investigate the impact of parameter *k*.
+  - **SensitivityOfNeighbours**: inspect the detection accuracy interms of RUC AUC, PR AUC, P@n by varying the number of neighbours.
 - *MultipleRunningAverage*: (TD)
 
 
