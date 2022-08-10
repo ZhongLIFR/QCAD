@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+This is the script used to generate contextual anomalies.
+
 Created on Wed Dec 29 22:33:52 2021
 
 @author: zlifr
@@ -152,9 +154,10 @@ import numpy as np
 ##You must specify AbsRootDir by yourself !!!!!!!!
 AbsRootDir = '/Users/zlifr/Documents/GitHub' 
 
-###############################################################################
+
 ###############################################################################
 ##An example, please uncomment the following code
+###############################################################################
 
 # RawDataSetPath = AbsRootDir+r'/QCAD/Data/RawData/abalone.csv'
 # RawDataSet = pd.read_csv(RawDataSetPath, sep=",") #it contains 4177 rows

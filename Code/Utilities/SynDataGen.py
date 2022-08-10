@@ -1,22 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+This is the script used to generate synthetic dataset.
+
 Created on Sun Jan  2 16:27:57 2022
 
 
 @author: zlifr
 
--Description1: \cite{Calikus2021 ArXiv}
-The synthetic dataset is generated as the mixtures of multivariate Gaussians using the CAD model (Song et al., 2007). 
-The number of contextual attributes and behavioral attributes is chosen to be 5. The number of Gaussians for contextual 
-and behavioral attributes is also set to be 5. The centroids of the Gaussians are randomly generated. The diagonal 
-of the covariance matrix is set to 1/4 of the average distance between the centroids in each dimension. 
-In total, we sampled 25, 000 data points and injected 1% contextual anomalies using the perturbation scheme.
+Please see our QCAD paper for description of generating synthetic dataset.
 
 """
-######################################################################################################################
-######################################################################################################################
-##step1 write a function to generate synthetic datsets
+
+# =============================================================================
+# ##Step1. write a function to generate synthetic datsets
+# =============================================================================
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -226,125 +224,22 @@ def GenSynDataset(num_con, num_con_cat, num_behave, sample_size, num_gaussian, m
     return syn_data_set
 
 
-##test 
+# =============================================================================
+# Step2. apply above defined function to generate synthetic dataset
+# =============================================================================
+
+##You must specify AbsRootDir by yourself !!!!!!!!
+AbsRootDir = '/Users/zlifr/Documents/GitHub' 
 
 
-# ## SynDataSet 1
-# MyDataSet = GenSynDataset(num_con =5 , num_con_cat = 2, num_behave = 5,
+
+###############################################################################
+##An example, please uncomment the following code
+###############################################################################
+
+# TestDataSet = GenSynDataset(num_con =5 , num_con_cat = 2, num_behave = 5,
 #                           sample_size = 2000, num_gaussian = 5, my_scheme = "S1")
-# MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/SynDataSet1.csv", sep=',')
-# ## SynDataSet 2
-# MyDataSet = GenSynDataset(num_con =5 , num_con_cat = 2, num_behave = 5,
-#                           sample_size = 2000, num_gaussian = 5, my_scheme = "S2")
-# MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/SynDataSet2.csv", sep=',')
-# ## SynDataSet 3
-# MyDataSet = GenSynDataset(num_con =5 , num_con_cat = 2, num_behave = 5,
-#                           sample_size = 2000, num_gaussian = 5, my_scheme = "S3")
-# MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/SynDataSet3.csv", sep=',')
-# ## SynDataSet 4
-# MyDataSet = GenSynDataset(num_con =5 , num_con_cat = 2, num_behave = 5,
-#                           sample_size = 2000, num_gaussian = 5, my_scheme = "S4")
-# MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/SynDataSet4.csv", sep=',')
-# ## SynDataSet 5
-# MyDataSet = GenSynDataset(num_con =5 , num_con_cat = 2, num_behave = 5,
-#                           sample_size = 2000, num_gaussian = 5, my_scheme = "S5")
-# MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/SynDataSet5.csv", sep=',')
-
-# ## SynDataSet 6
-# MyDataSet = GenSynDataset(num_con =20 , num_con_cat = 6, num_behave = 5,
-#                           sample_size = 2000, num_gaussian = 5, my_scheme = "S1")
-# MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/SynDataSet6.csv", sep=',')
-# ## SynDataSet 7
-# MyDataSet = GenSynDataset(num_con =20 , num_con_cat = 6, num_behave = 5,
-#                           sample_size = 2000, num_gaussian = 5, my_scheme = "S2")
-# MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/SynDataSet7.csv", sep=',')
-# ## SynDataSet 8
-# MyDataSet = GenSynDataset(num_con =20 , num_con_cat = 6, num_behave = 5,
-#                           sample_size = 2000, num_gaussian = 5, my_scheme = "S3")
-# MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/SynDataSet8.csv", sep=',')
-# ## SynDataSet 9
-# MyDataSet = GenSynDataset(num_con =20 , num_con_cat = 6, num_behave = 5,
-#                           sample_size = 2000, num_gaussian = 5, my_scheme = "S4")
-# MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/SynDataSet9.csv", sep=',')
-# ## SynDataSet 10
-# MyDataSet = GenSynDataset(num_con =20 , num_con_cat = 6, num_behave = 5,
-#                           sample_size = 2000, num_gaussian = 5, my_scheme = "S5")
-# MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/SynDataSet10.csv", sep=',')
-
-######################################################################################################################
-######################################################################################################################
-##step2 use ContextualAnomaltGene script to inject outliers
-
-# from ContextualAnomalyGene import GenerateData
-
-# # # num_con_value = 3
-# # # num_con_cat_value = 1
-# # # num_behave_value = 10
+# SynDataSetPath = AbsRootDir+r'/QCAD/Data/SynData/test.csv'
+# TestDataSet.to_csv(SynDataSetPath, sep=',')
 
 
-# num_con_value = 5
-# num_con_cat_value = 2
-# num_behave_value = 5
-# sample_size_value = 1000
-# num_gaussian_value = 5
-# anomaly_ratio = 0.1
-
-# anomaly_number  = int(anomaly_ratio*sample_size_value)
-
-# RawDataSet = GenSynDataset(num_con = num_con_value , num_con_cat = num_con_cat_value, 
-#                             num_behave = num_behave_value, sample_size = sample_size_value, num_gaussian = num_gaussian_value)
-
-# RawDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/Dataset1.csv", sep=',')
-
-# FilePath = r"/Users/zlifr/Desktop/HHBOS/SynData/Dataset1.csv"
-
-# AllCols = RawDataSet.columns.tolist()
-
-# ContextCols = AllCols[0:num_con_value]
-
-# BehaveCols = AllCols[num_con_value:]
-
-# NumCols = AllCols[0:(num_con_value-num_con_cat_value)] + BehaveCols
-
-# FinalDataSet = GenerateData(FilePath, AllCols, ContextCols, BehaveCols, NumCols, anomaly_number) 
-
-# FinalDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/Dataset1Gene.csv", sep=',')
-
-
-######################################################################################################################
-######################################################################################################################
-##step3 test accuracy when using different number of neighbours and algorithms 
-
-# from ICAD_sensitivity import SensitivityAnalysisOfK
-
-
-# FilePath = r"/Users/zlifr/Desktop/HHBOS/SynData/Dataset1.csv"
-# ResultFilePath = r"/Users/zlifr/Desktop/HHBOS/SynData/Dataset1Gene.csv"
-# SaveFilePath1 = r"/Users/zlifr/Desktop/HHBOS/SynResult/Dataset1ResultMean1.csv"
-# SaveFilePath2= r"/Users/zlifr/Desktop/HHBOS/SynResult/Dataset1ResultMean2.csv"
-
-
-# AllColsWithTruth = AllCols + ['ground_truth']
-
-# anomaly_value = anomaly_number
-
-# sample_value = anomaly_number
-
-# depth_value = 1
-
-# SaveFilePath = SaveFilePath1
-
-# alpha_value = 10
-
-# min_k = 15
-
-# max_k = 200
-
-# step_k = 5
-
-# num_dataset = 10
-
-# SensitivityAnalysisOfK(FilePath, ResultFilePath, SaveFilePath,
-#                         AllCols, AllColsWithTruth, ContextCols, BehaveCols, NumCols, 
-#                         anomaly_value, sample_value, depth_value, alpha_value,
-#                         min_k, max_k, step_k, num_dataset)
