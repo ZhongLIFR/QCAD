@@ -5,6 +5,8 @@ Paper submitted to DAMI (Zenodo)
 
 the QCAD repo includes two folders, Code and Data.
 
+
+### Code
 Specifcially, the Code folder contains the following sub-folders:
 
 - *Implementation*: which includes the implementations of our contextual anomaly detection algorithm **QCAD**, and other SOTA contextual anomaly detection algorithms such as **COD**, **ROCOD**, **LoPAD**, and traditional anomaly detection algorithms **PyODtest**(based on PyOD);
@@ -14,4 +16,7 @@ Specifcially, the Code folder contains the following sub-folders:
 - *RuntimeAnalysis*: (TD)
 - *SensitivityStudies*: (TD)
 - *MultipleRunningAverage*: (TD)
+
+
+### Data
 
