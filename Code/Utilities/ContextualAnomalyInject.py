@@ -60,7 +60,7 @@ def GenerateData(FilePath, AllCols, ContextCols, BehaveCols, NumCols, OutlierNum
     ContextCols : list
         the list of contextual feature names.
     BehaveCols : list
-        the list of behavioural feature names..
+        the list of behavioural feature names.
     NumCols : list
         the list of contextual feature names where the feratures are numerical.
     OutlierNum : int, optional

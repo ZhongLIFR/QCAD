@@ -9,6 +9,9 @@ Created on Thu Oct 14 09:18:07 2021
 
 """
 
+##You must specify AbsRootDir by yourself !!!!!!!!
+AbsRootDir = '/Users/zlifr/Documents/GitHub' 
+
 # =============================================================================
 # #Step I. implement ROCOD
 # =============================================================================
@@ -28,6 +31,39 @@ import numpy as np
 
 
 def ROCOD_Basic(RawDataSet, MyColList, MyContextList, MyBehaveList, distance_threshold, save_index, FilePath_DistanceMatrix):
+    """
+    
+    When the ROCOD model is not learned, we use this function.
+    
+    Parameters
+    ----------
+    RawDataSet : dataframe
+        dataframe containing raw dataset after preprocessing.
+    MyColList : TYPE
+        the list of all feature names.
+    MyContextList : TYPE
+        the list of contextual feature names.
+    MyBehaveList : TYPE
+       the list of behavioural feature names.
+    distance_threshold : double
+        threshold value used to find neighbours.
+    save_index : 0 or 1
+        indicate whether to save or load the distance matrix.
+    FilePath_DistanceMatrix : string
+        the file path to save or load the distance matrix.
+
+    Returns
+    -------
+    my_pr_auc : double
+        pr auc score.
+    my_roc_score : double
+        roc auc score.
+    P_at_n_value : double
+        p@n score.
+    MyDataSet : dataframe
+        dataframe containing raw dataset and anomaly scores.
+        
+    """
     
     RawDataSet = RawDataSet.dropna()  #remove missing values
     
@@ -78,6 +114,20 @@ def ROCOD_Basic(RawDataSet, MyColList, MyContextList, MyBehaveList, distance_thr
     
     
     def NumOfNeighbours(query_point_index, distance_threshold):
+        """
+        Parameters
+        ----------
+        query_point_index : int
+            the index of query instance.
+        distance_threshold : double
+            threshold value used to find neighbours.
+
+        Returns
+        -------
+        query_filter_result : int
+            the number of found neighbours.
+
+        """
         # print("query_point_index:")
         # print(query_point_index)
         # print("query_point_index location:")
@@ -119,6 +169,30 @@ def ROCOD_Basic(RawDataSet, MyColList, MyContextList, MyBehaveList, distance_thr
                                 MyBehaveDataSet, MyContextDataSet,
                                 Max_ContextualMembers, Regression_Models,
                                 distance_matrix):
+        """
+        Parameters
+        ----------
+        query_point_index : int
+            the index of query instance.
+        distance_threshold : double
+            threshold value used to find neighbours.
+        MyBehaveDataSet : dataframe
+            dataframe consisting of behavioural feature space of reference group and the query object.
+        MyContextDataSet : dataframe
+            dataframe consisting of contextual feature space of reference group and the query object..
+        Max_ContextualMembers : int
+            the number of found contextual neighbours.
+        Regression_Models : dict
+            a dictionary of learned regression models.
+        distance_matrix : dataframe
+            computed distance matrix.
+
+        Returns
+        -------
+        Final_point_Bahave : dataframe
+            anomaly scores in each feature (as target feature).
+
+        """
     
         #################################################################################
         ##Step 2.1: For each point, find local pattern based on its neighbors
@@ -307,6 +381,47 @@ def ROCOD_Basic(RawDataSet, MyColList, MyContextList, MyBehaveList, distance_thr
 
 
 def ROCOD(RawDataSet, MyColList, MyContextList, MyBehaveList, distance_threshold, save_index, FilePath_DistanceMatrix, is_model_learned, TrainDataSet):
+    """
+    Two cases are considered:
+        0: the model is not learned. Everything, especially the distance matrix, needs to be computed.
+        1: the model has been learned. The distance matrix needs not to be recomputed when we perform multiple running tests.
+
+
+    Parameters
+    ----------
+    RawDataSet : dataframe
+        dataframe containing raw dataset after preprocessing.
+    MyColList : TYPE
+        the list of all feature names.
+    MyContextList : TYPE
+        the list of contextual feature names.
+    MyBehaveList : TYPE
+       the list of behavioural feature names.
+    distance_threshold : double
+        threshold value used to find neighbours.
+    save_index : 0 or 1
+        indicate whether to save or load the distance matrix.       
+    FilePath_DistanceMatrix : string
+        the file path to save or load the distance matrix.
+    is_model_learned : o or 1
+        indicate whether the model has been learned.
+    TrainDataSet : dataframe
+        dataframe containing raw dataset after preprocessing. A copy to avoid errors.
+
+    Returns
+    -------
+    my_pr_auc : double
+        pr auc score.
+    my_roc_score : double
+        roc auc score.
+    P_at_n_value : double
+        p@n score.
+    duringtime1 : double
+        training time. Not used.
+    duringtime2 : double
+        training + testing time. Not used
+
+    """
     
     ##first test whther it is a train or test matrix
     if is_model_learned == 0:
@@ -319,6 +434,10 @@ def ROCOD(RawDataSet, MyColList, MyContextList, MyBehaveList, distance_threshold
     ##Test whether it is a learned model
     elif is_model_learned == 1:
         
+        """
+        This is similar to the ROCOD_Basic() function
+        
+        """
         TestDataSet = RawDataSet.copy(deep=True)
         sample_value = TestDataSet["ground_truth"][TestDataSet["ground_truth"] == 1].count()
         
@@ -410,6 +529,9 @@ def ROCOD(RawDataSet, MyColList, MyContextList, MyBehaveList, distance_threshold
                                         MyBehaveDataSet, MyContextDataSet,
                                         Max_ContextualMembers, Regression_Models,
                                         distance_matrix):
+                """
+                As above
+                """
             
                 #################################################################################
                 ##Step 2.1: For each point, find local pattern based on its neighbors
@@ -620,26 +742,26 @@ def ROCOD(RawDataSet, MyColList, MyContextList, MyBehaveList, distance_threshold
 # ## Step1: load dataset and set parameters
 # ##########################################
 
-# RawDataSet = pd.read_csv("/Users/zlifr/Desktop/HHBOS/Data2/bodyfatGene.csv", sep=",")
+RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/bodyfatGene.csv'
+RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
+RawDataSet = RawDataSet.dropna()  #remove missing values
 
-# RawDataSet = RawDataSet.dropna()  #remove missing values
+MyColList = ['Density', 'BodyFat', 
+              'Age', 'Weight', 'Height', 'Neck', 'Chest','Abdomen', 'Hip', 'Thigh', 
+              'Knee', 'Ankle', 'Biceps', 'Forearm',
+              'ground_truth']
 
-# MyColList = ['Density', 'BodyFat', 
-#               'Age', 'Weight', 'Height', 'Neck', 'Chest','Abdomen', 'Hip', 'Thigh', 
-#               'Knee', 'Ankle', 'Biceps', 'Forearm',
-#               'ground_truth']
+MyContextList = ['Age', 'Weight', 'Height', 'Neck', 'Chest','Abdomen', 'Hip', 'Thigh', 'Knee', 'Ankle', 'Biceps', 'Forearm']
 
-# MyContextList = ['Age', 'Weight', 'Height', 'Neck', 'Chest','Abdomen', 'Hip', 'Thigh', 'Knee', 'Ankle', 'Biceps', 'Forearm']
+MyBehaveList = ['Density', 'BodyFat']
 
-# MyBehaveList = ['Density', 'BodyFat']
-
-# MyDataSet = RawDataSet[MyColList]
+MyDataSet = RawDataSet[MyColList]
 
 # ##########################################
 # ## Step2: call ROCOD function to get results
 # ##########################################
 
-# ROCOD(MyDataSet, MyColList, MyContextList, MyBehaveList, 0.9, 0, r'',0, MyDataSet) 
+ROCOD(MyDataSet, MyColList, MyContextList, MyBehaveList, 0.9, 0, r'',0, MyDataSet) 
 
 
 
