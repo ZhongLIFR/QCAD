@@ -23,6 +23,11 @@ Specifcially, the Code folder contains the following sub-folders:
   - **ExampleFootball.py**: generate the football application example in the Experiment Results section;
   -  **ExampleQuantileHeight.py**: generate the figures in the Introduction section;
   -   **ExampleBeanPlot.py**: generate the Beanplot in the Method section;
+- *MultipleRunningAverage*: which run all involved detection algothms 10 times independently.
+  - **AverageTest.py**: execute all anomaly detection algorithms except **CAD** on 20 real-world datasets 10 times, respectively.
+  - **AverageTestCAD.py**: execute **CAD** separately on 20 real-world datasets 10 times, respectively. This is because it takes a long time.
+  - **SynAverageTest.py**: execute all anomaly detection algorithms except **CAD** on 10 synthetic datasets 10 times, respectively.
+  - **SynAverageTestCAD.py**: execute **CAD** separately on 10 synthetic datasets 10 times, respectively. This is because it takes a long time.
 - *AblationStuides*: which investigate the impacts of different components on detection performance.
   - **AblationStudy.py**: conduct two ablation stuides.
 - *RuntimeAnalysis*: which inspects the computational cost of **QCAD** and **CAD**.
@@ -31,11 +36,7 @@ Specifcially, the Code folder contains the following sub-folders:
   - **RuntimeSample.py**: inspect the running time by varying the number of samples.
 - *SensitivityStudies*: which investigate the impact of parameter *k*.
   - **SensitivityOfNeighbours.py**: inspect the detection accuracy in terms of RUC AUC, PR AUC, P@n by varying the number of neighbours.
-- *MultipleRunningAverage*: which run all involved detection algothms 10 times independently.
-  - **AverageTest.py**: execute all anomaly detection algorithms except **CAD** on 20 real-world datasets 10 times, respectively.
-  - **AverageTestCOD.py**: execute **CAD** separately on 20 real-world datasets 10 times, respectively. This is because it takes a long time.
-  - **SynAverageTest.py**: execute all anomaly detection algorithms except **CAD** on 10 synthetic datasets 10 times, respectively.
-  - **SynAverageTestCOD.py**: execute **CAD** separately on 10 synthetic datasets 10 times, respectively. This is because it takes a long time.
+
 
 ### Data
 Specifcially, the Data folder contains the following sub-folders:
