@@ -742,26 +742,26 @@ def ROCOD(RawDataSet, MyColList, MyContextList, MyBehaveList, distance_threshold
 # ## Step1: load dataset and set parameters
 # ##########################################
 
-RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/bodyfatGene.csv'
-RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
-RawDataSet = RawDataSet.dropna()  #remove missing values
+# RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/bodyfatGene.csv'
+# RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
+# RawDataSet = RawDataSet.dropna()  #remove missing values
 
-MyColList = ['Density', 'BodyFat', 
-              'Age', 'Weight', 'Height', 'Neck', 'Chest','Abdomen', 'Hip', 'Thigh', 
-              'Knee', 'Ankle', 'Biceps', 'Forearm',
-              'ground_truth']
+# MyColList = ['Density', 'BodyFat', 
+#               'Age', 'Weight', 'Height', 'Neck', 'Chest','Abdomen', 'Hip', 'Thigh', 
+#               'Knee', 'Ankle', 'Biceps', 'Forearm',
+#               'ground_truth']
 
-MyContextList = ['Age', 'Weight', 'Height', 'Neck', 'Chest','Abdomen', 'Hip', 'Thigh', 'Knee', 'Ankle', 'Biceps', 'Forearm']
+# MyContextList = ['Age', 'Weight', 'Height', 'Neck', 'Chest','Abdomen', 'Hip', 'Thigh', 'Knee', 'Ankle', 'Biceps', 'Forearm']
 
-MyBehaveList = ['Density', 'BodyFat']
+# MyBehaveList = ['Density', 'BodyFat']
 
-MyDataSet = RawDataSet[MyColList]
+# MyDataSet = RawDataSet[MyColList]
 
 # ##########################################
 # ## Step2: call ROCOD function to get results
 # ##########################################
 
-ROCOD(MyDataSet, MyColList, MyContextList, MyBehaveList, 0.9, 0, r'',0, MyDataSet) 
+# ROCOD(MyDataSet, MyColList, MyContextList, MyBehaveList, 0.9, 0, r'',0, MyDataSet) 
 
 
 
