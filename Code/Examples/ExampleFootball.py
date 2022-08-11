@@ -6,37 +6,22 @@ Created on Mon Jan 24 11:03:28 2022
 @author: zlifr
 """
 
-###############################################################################
-##Step 1. Load DataSet
-###############################################################################
+##You must specify AbsRootDir by yourself !!!!!!!!
+AbsRootDir = '/Users/zlifr/Documents/GitHub' 
+
+
+# =============================================================================
+# ##Step 1. Load Dataset
+# =============================================================================
 
 import pandas as pd 
-RawDataSet = pd.read_csv("/Users/zlifr/Desktop/HHBOS/Examples/EPL_20_21.csv", sep=",")
-
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-RawDataSet[['Position1', 'Position2']] = RawDataSet['Position'].str.split(',', 1, expand=True)
+RawDataSetPath = AbsRootDir+r'/QCAD/Data/Examples/football_example.csv'
 
-for row_index in range(RawDataSet.shape[0]):
-    if RawDataSet.loc[row_index,"Position2"] == None:
-        RawDataSet.loc[row_index,"Position2"] = RawDataSet.loc[row_index,"Position1"]
-
-my_df = RawDataSet[['Name','Position1','Position2','Age', 'Matches', 'Starts','Mins','Goals', 'Assists']]
-
-
-
-my_df.to_csv(r"/Users/zlifr/Desktop/HHBOS/Examples/football_example.csv", sep=',')
-
-
-###############################################################################
-##Step 2. Anomaly Detection
-###############################################################################
-
-
-RawDataSet = pd.read_csv("/Users/zlifr/Desktop/HHBOS/Examples/football_example.csv", sep=",")
+RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
 
 RawDataSet = RawDataSet.dropna()  #remove missing values
 
@@ -46,65 +31,44 @@ MyContextList = ['Position1','Position2', 'Age', 'Matches', 'Starts','Mins']
 
 MyBehaveList = ['Goals', 'Assists']
 
-# neighbour_value = 216
 neighbour_value = 266
 
-my_df.to_csv(r"/Users/zlifr/Desktop/HHBOS/Examples/football_example.csv", sep=',')
+# =============================================================================
+# ##Step 2. Anomaly Detection
+#          - Data Preprocessing 1 by scaling all behavioural attributes
+#          - Data Preprocessing 2 by encoding categorical contextual attributes 
+#          - Define QCAD
+#          - Execute QCAD
+#          - Save results
+# =============================================================================
 
 
-# =============================================================================
-# Data Preprocessing1: Scale all behavioural attributes
-# =============================================================================
+###############################################################################
+## Step2.1. Data Preprocessing -> Scale all behavioural attributes
+###############################################################################
+
 from sklearn.preprocessing import MinMaxScaler
 MyScaler = MinMaxScaler()
 if len(MyBehaveList) > 0:
     RawDataSet[MyBehaveList] = MyScaler.fit_transform(RawDataSet[MyBehaveList])
 
-# =============================================================================
-# Data Preprocessing2: Encode categorical contextual attributes 
-# =============================================================================
-##The "LabelEncoder" works randomly, to keep consistency, we define a function by ourself
+###############################################################################
+## Step2.2. Data Preprocessing -> Encode categorical contextual attributes 
+###############################################################################
+
 from sklearn.preprocessing import LabelEncoder
 label_encoder = LabelEncoder()
 RawDataSet["Position1"] = label_encoder.fit_transform(RawDataSet["Position1"])
 RawDataSet["Position2"] = label_encoder.fit_transform(RawDataSet["Position2"])  
 
-# def MyLabelEncoder(MyDataFrame, MyColumnNameList):
-    
-#     Reverse_LabelEncoder = {}
-#     for MyColumnName in MyColumnNameList:
-#         unique_value = set(MyDataFrame[MyColumnName])
-#         list_unique_value = sorted(list(unique_value))
-#         mapping_dict = {}
-#         reverse_mapping_dict = {}
-#         for map_item in range(0,len(list_unique_value)):
-#             mapping_dict[list_unique_value[map_item]] = map_item
-#             reverse_mapping_dict[map_item] = list_unique_value[map_item]
-        
-#         print(mapping_dict)
-#         MyDataFrame = MyDataFrame.replace({MyColumnName: mapping_dict})
-#         Reverse_LabelEncoder[MyColumnName] = reverse_mapping_dict #save reverse encoding for each categorical column
-        
-#     return  MyDataFrame, Reverse_LabelEncoder
-
-# RawDataSet, Reverse_LabelEncoder = MyLabelEncoder(RawDataSet, ["Position1","Position2"])
-
-# def MyReverseLabelEncoder(MyDataFrame, MyColumnNameList, MyReverseLabelEncoder):
-    
-#     for MyColumnName in MyColumnNameList:
-        
-#         MyDataFrame = MyDataFrame.replace({MyColumnName: MyReverseLabelEncoder[MyColumnName]})
-        
-#     return  MyDataFrame
+RawDataNoEncoding = pd.read_csv(RawDataSetPath, sep=",")
 
 
-# RawDataNoEncoding =  MyReverseLabelEncoder(RawDataSet, ["Position1","Position2"], Reverse_LabelEncoder)
+###############################################################################
+## Step2.3. Define QCAD, which is also available in QCAD.py.
+##          For completeness, we copy it here.
+###############################################################################
 
-RawDataNoEncoding = pd.read_csv("/Users/zlifr/Desktop/HHBOS/Examples/football_example.csv", sep=",")
-
-# =============================================================================
-# Define RICAD
-# =============================================================================
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -129,22 +93,44 @@ from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 from skgarden import RandomForestQuantileRegressor
 
-def ICAD_QRF(RawDataSet,
-              MyColList,
-              MyContextList,
-              MyBehaveList,
-              neighbour_value):
+def QCAD(RawDataSet,
+         MyColList,
+         MyContextList,
+         MyBehaveList,
+         neighbour_value):
+    """
+    Parameters
+    ----------
+    RawDataSet : dataframe
+        dataframe containing raw data.
+    MyColList : list
+        the list of all feature names.
+    MyContextList : list
+        the list of all contextual feature names.
+    MyBehaveList : list
+        the list of all behavioural feature names.
+    neighbour_value : int
+        the number of neighbours.
+
+    Returns
+    -------
+    MyDataset : dataframe
+        dataframe containing raw data and anomaly scores.
+    distance_matrix : dataframe
+        Gower's distance matrix between all objects.
+
+    """
     
     ###############################################################################
+    ##Step F1. set datasets
     ###############################################################################
-    ##Step1 set datasets
 
     MyDataSet = RawDataSet[MyColList]
     MyContextDataSet = MyDataSet[MyContextList]
             
     ###############################################################################
+    ##Step F2. find  neighbors in contextual space for each point
     ###############################################################################
-    ##Step2 find  neighbors in contextual space for each point
     import gower
     from time import time
     t0 = time() # to record time 
@@ -172,16 +158,64 @@ def ICAD_QRF(RawDataSet,
     print(duration1)
 
     ###############################################################################
+    ##Step F3. calculate  anomaly  score in behavioral  space for each point
     ###############################################################################
-    ##Step3 calculate  anomaly  score in behavioral  space for each point
     
     def QRF_score(ReferenceDataSet, MyColList, MyContextList, MyBehaveList, step_width, new_point_index):
+        """
+        
+        Parameters
+        ----------
+        ReferenceDataSet : dataframe
+            dataframe that contains the neighbours of an instance.
+        MyColList : list
+            the list of all feature names.
+        MyContextList : list
+            the list of all contextual feature names.
+        MyBehaveList : list
+            the list of all behavioural feature names.
+        step_width : int
+            int value used to specifiy the number of quantiles such that 100/step_width must be an int.
+        new_point_index : int
+            index of newly considered instance.
+
+        Returns
+        -------
+        anomaly_behave : list
+            list containing anomaly scores.
+            
+        """
     
         MyDataSet = ReferenceDataSet[MyColList]
         MyContextDataSet = MyDataSet[MyContextList]
         MyBehaveDataSet = MyDataSet[MyBehaveList]
                 
-        def QuantilePerCol(X_train, X_test, y_train, y_test, step_width):
+        def QuantilePerCol(X_train, X_test, y_train, y_test, step_width =1):
+            """
+
+            Parameters
+            ----------
+            X_train : dataframe
+                contextual feature values of the reference group.
+            X_test : dataframe
+                contextual feature values of the target object.
+            y_train : dataframe
+                behavioural feature values of the reference group.
+            y_test : dataframe
+                behavioural feature values of target object.
+            step_width : int
+                int value used to specifiy the number of quantiles uch that 100/step_width must be an int.
+
+            Returns
+            -------
+            quantile_location : int
+                estimated quantile location.
+            quantile_diff : double
+                scaled anomaly score.
+            quantile_rank : int
+                ranking of quantile location, not used.
+
+            """
             
             rfqr = RandomForestQuantileRegressor(random_state=0, min_samples_split=10, n_estimators=10)
             
@@ -347,45 +381,50 @@ def ICAD_QRF(RawDataSet,
     return MyDataSet, distance_matrix
 
 
-# =============================================================================
-# Execute funtion
-# =============================================================================
-# test_result, dist_mat = ICAD_QRF(RawDataSet, MyColList, MyContextList, MyBehaveList, neighbour_value)
+###############################################################################
+# Step2.4. Execute QCAD funtion
+###############################################################################
+test_result, dist_mat = QCAD(RawDataSet, MyColList, MyContextList, MyBehaveList, neighbour_value)
 
-# test_result["index"] = test_result.index
+test_result["index"] = test_result.index
 
-# test_result["Name"] = RawDataSet["Name"]
+test_result["Name"] = RawDataSet["Name"]
 
-# test_result["Anomaly Score"] = test_result["weight_score"]
-
-# =============================================================================
-# Save results 
-# =============================================================================
-# import pandas as pd
-# dist_mat_df = pd.DataFrame(dist_mat)
-# dist_mat_df = dist_mat_df.astype("float")
-# test_result.to_csv(r"/Users/zlifr/Desktop/HHBOS/Examples/test_result.csv", sep=',')
-# dist_mat_df.to_csv(r"/Users/zlifr/Desktop/HHBOS/Examples/dist_mat_df.csv", sep=',')
-
+test_result["Anomaly Score"] = test_result["weight_score"]
 
 ###############################################################################
-##Step 3. Anomaly Explanation
-##First, report contextual neighbours
-##Second, report anomaly scores
-##Third, report raw anomaly scores with Beanplot 
+# Step2.5. Save anomaly detection results 
 ###############################################################################
+test_resultPath = AbsRootDir+r'/QCAD/Data/Examples/test_result.csv'
+tesdist_mat_dfPath = AbsRootDir+r'/QCAD/Data/Examples/dist_mat_df.csv'
+dist_mat_df = pd.DataFrame(dist_mat)
+dist_mat_df = dist_mat_df.astype("float")
+test_result.to_csv(test_resultPath, sep=',')
+dist_mat_df.to_csv(tesdist_mat_dfPath, sep=',')
+
+
 
 # =============================================================================
-# Load results
+# ##Step 3. Anomaly Explanation
+#           -First, report contextual neighbours
+#           -Second, report anomaly scores
+#           -Third, define the Beanplot function  
+#           -Fourth, execute the Beanplot function to report raw anomaly scores 
 # =============================================================================
-test_result = pd.read_csv(r"/Users/zlifr/Desktop/HHBOS/Examples/test_result.csv", sep=',')
-dist_mat_df = pd.read_csv(r"/Users/zlifr/Desktop/HHBOS/Examples/dist_mat_df.csv", sep=',')
 
-# =============================================================================
+##############################################################################
+##Step 3.0. Load results
+##############################################################################
+# test_resultPath = AbsRootDir+r'/QCAD/Data/Examples/test_result.csv'
+# tesdist_mat_dfPath = AbsRootDir+r'/QCAD/Data/Examples/dist_mat_df.csv'
+# test_result = pd.read_csv(test_resultPath, sep=',')
+# dist_mat_df = pd.read_csv(tesdist_mat_dfPath, sep=',')
+
+##############################################################################
 #Step 3.1. Display traditional anomaly score
 # Color map: https://htmlcolorcodes.com/
 ##318-366
-# =============================================================================
+##############################################################################
 # import seaborn as sns
 # import matplotlib.pylab as plt
 # sns.set(rc={'axes.facecolor':'#FADBD8', 'figure.facecolor':'white'})
@@ -396,9 +435,9 @@ dist_mat_df = pd.read_csv(r"/Users/zlifr/Desktop/HHBOS/Examples/dist_mat_df.csv"
 # g2 = sns.scatterplot(data=test_result, x="Goals", y="Assists", size="Anomaly Score", hue="Anomaly Score", palette = "Greens", legend=True, alpha=0.9)
 # g2.legend(loc='upper left', ncol=6, title="Anomaly Score", fontsize=8)
 
-# =============================================================================
+##############################################################################
 #Step 3.2. Display Anomaly Score List
-# =============================================================================
+##############################################################################
 # sns.set(style='white')
 
 # test_result = test_result.sort_values(by=['weight_score'], ascending=False)
@@ -425,9 +464,9 @@ dist_mat_df = pd.read_csv(r"/Users/zlifr/Desktop/HHBOS/Examples/dist_mat_df.csv"
 #     ax.annotate(txt, (z[i], y[i]), rotation=40, fontsize=7)
 
 
-# =============================================================================
+##############################################################################
 # Step 3.3. Define a function to explain an anomaly
-# =============================================================================
+##############################################################################
 
 def AnomalyExplain(query_index,
                    dist_matrix,
@@ -437,8 +476,34 @@ def AnomalyExplain(query_index,
                    AllCols,
                    ContexCols,
                    BehaveCols):
+    """
+
+    Parameters
+    ----------
+    query_index : int
+        the index of query object.
+    dist_matrix : dataframe
+        Gower's distance matrix between all objects.
+    num_neighbours : int
+        the number of neighbours.
+    RawData : dataframe
+        dataframe containing all objects after preprocessing.
+    RawDataNoEncoding : dataframe
+        dataframe containing all objects before preprocessing..
+    AllCols : list
+        list containing all feature names.
+    ContexCols : list
+        list containing all contextual feature names..
+    BehaveCols : list
+        list containing all behavioural feature names..
+
+    Returns
+    -------
+    None
+
+    """
     # ==================================================================
-    ##Step 1. find k contextual neighbours and show their distribution
+    ##Step F1. find k contextual neighbours and show their distribution
     # ==================================================================
     import pandas as pd
     import seaborn as sns
@@ -505,10 +570,27 @@ def AnomalyExplain(query_index,
 
 
     # =============================================================================
-    # Step 3.3. Define a function to explain an anomaly
+    # Step F2. Define the beanplot function to explain an anomaly
     # =============================================================================
     
     def beanplot_variant(col_name, actual_value, quantile_vec, position=0):
+        """
+        Parameters
+        ----------
+        col_name : string
+            the name of target behavioural feature.
+        actual_value : double
+            the actual target behavioural feature value.
+        quantile_vec : list
+            list containing the estimated quantiles based on reference group of the target object.
+        position : double, optional
+            value used to adjust the position of plot. The default is 0.
+
+        Returns
+        -------
+        None.
+
+        """
         
         import matplotlib.pyplot as plt
         ##Paramter 1
@@ -574,15 +656,22 @@ def AnomalyExplain(query_index,
         plt.plot([len_box+position, len_box+position], [q25, q75], color="cyan") #connecting them with a box
     
     # ==================================================================
-    ##Step 2. calculate anomaly score using neighbouring data points
+    ##Step F3. calculate anomaly score using neighbouring data points
     # ==================================================================
     def QRF_score(ReferenceDataSet, MyColList, MyContextList, MyBehaveList, step_width, new_point_index):
+        """
+        As above
+        """
     
         MyDataSet = ReferenceDataSet[MyColList]
         MyContextDataSet = MyDataSet[MyContextList]
         MyBehaveDataSet = MyDataSet[MyBehaveList]
                 
         def QuantilePerCol(X_train, X_test, y_train, y_test, step_width):
+            """
+            As above
+            
+            """
             
             rfqr = RandomForestQuantileRegressor(random_state=0, min_samples_split=10, n_estimators=10)
             
@@ -676,7 +765,7 @@ def AnomalyExplain(query_index,
     print(quantile_anomaly_score)
     
     # ==================================================================
-    ##Step 3. display raw anomaly scores in each behaviroual feature using beanplot variant in descending order
+    ##Step F4. display raw anomaly scores in each behaviroual feature using beanplot variant in descending order
     # ==================================================================
     
     plt.figure()
@@ -692,29 +781,21 @@ def AnomalyExplain(query_index,
     
 
 # =============================================================================
-# Test function
+# Step 3.4. Execute Anomaly Explanation function
 # =============================================================================
 # RawDataNoEncoding = pd.read_csv("/Users/zlifr/Desktop/HHBOS/Examples/football_example.csv", sep=",")
 
-##Emile Smith-Rowe with indes 193
-# test_df = AnomalyExplain(193,
+##############################################################################
+##Example:  test index 478
+##############################################################################
+# test_df = AnomalyExplain(478,
 #                          dist_mat_df,
-#                          216,
+#                          266,
 #                          RawDataSet, 
 #                          RawDataNoEncoding,
 #                          MyColList,
 #                          MyContextList,
 #                          MyBehaveList)
-
-
-test_df = AnomalyExplain(478,
-                          dist_mat_df,
-                          266,
-                          RawDataSet, 
-                          RawDataNoEncoding,
-                          MyColList,
-                          MyContextList,
-                          MyBehaveList)
 
 
     
