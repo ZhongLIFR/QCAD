@@ -8,8 +8,11 @@ Created on Mon Oct 18 17:32:29 2021
 Reproduce Conditional Anomaly Detection
 
 """
+##You must specify AbsRootDir by yourself !!!!!!!!
+AbsRootDir = '/Users/zlifr/Documents/GitHub' 
+
 # =============================================================================
-# Step I. implement COD
+# Step I. implement CAD
 # =============================================================================
 
 import pandas as pd
@@ -19,7 +22,39 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-def COD(RawDataSet, MyContextList, MyBehaveList, num_gau_comp, alpha_log, is_model_learned, FilePath_MappingMatrix):
+def CAD(RawDataSet, MyContextList, MyBehaveList, num_gau_comp, alpha_log, is_model_learned, FilePath_MappingMatrix):
+    """
+    Parameters
+    ----------
+    RawDataSet : dataframe
+        dataframe containing raw dataset after preprocessing.
+    MyContextList : list
+        the list of all contextual feature names.
+    MyBehaveList : list
+        the list of all behavioral feature names.
+    num_gau_comp : int
+        the number Gaussian Components.
+    alpha_log : double
+        a small positive value used to avoid zero in the denominator.
+    is_model_learned : 0 or 1
+        indicating if the model has been learned by using 1(yes) or 0(no).
+    FilePath_MappingMatrix : string
+        the file path of learned mapping matrix.
+
+    Returns
+    -------
+    my_pr_auc : double
+        pr auc score.
+    my_roc_score : double
+        roc auc score.
+    P_at_n_value : double
+        p@n score.
+    duringtime1 : double
+        training time. Not used.
+    duringtime2 : double
+        training + testing time. Not used
+        
+    """
     from time import time
     t0 = time() # to record time 
     
@@ -328,14 +363,15 @@ def COD(RawDataSet, MyContextList, MyBehaveList, num_gau_comp, alpha_log, is_mod
 
 
 # =============================================================================
-# Step II. testing COD with real world dataset
+# Step II. testing CAD with real world dataset
 # =============================================================================
 
-################################################
-##Step 1: Load dataset and set parameters 
-################################################
+# ################################################
+# ##Step 1: Load dataset and set parameters 
+# ################################################
 
-# RawDataSet = pd.read_csv("/Users/zlifr/Desktop/HHBOS/Data2/EnergyGene.csv", sep=",")
+# RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/EnergyGene.csv'
+# RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
 # MyContextList = ['X1', 'X2', 'X3', 'X4', 'X5', 'X6', 'X7', 'X8']
 # MyBehaveList = ['Y1', 'Y2']
 # ##Number of gaussian components
@@ -343,14 +379,14 @@ def COD(RawDataSet, MyContextList, MyBehaveList, num_gau_comp, alpha_log, is_mod
 # ##A number to avoid log(0) or devided by zero
 # alpha_log = 0.001
 # ##An indicator of whether the model has been already learned 
-# is_model_learned = 1
+# is_model_learned = 0
 # ##Filepath to save or load mapping matrix
-# FilePath_MappingMatrix = r'/Users/zlifr/Desktop/HHBOS/TrainedModel/COD/mapping_matrix_EnergyGene.npy'
+# FilePath_MappingMatrix = AbsRootDir+r'/QCAD/Data/TempFiles/mapping_matrix_EnergyGene.npy'
 
-################################################
-##Step 2: call COD to get results
-################################################
-# COD(RawDataSet, MyContextList, MyBehaveList, num_gau_comp, alpha_log, 0, r'')
+# ################################################
+# ##Step 2: call CAD to get results
+# ################################################
+# CAD(RawDataSet, MyContextList, MyBehaveList, num_gau_comp, alpha_log, 0, r'')
     
 
 
