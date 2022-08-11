@@ -107,7 +107,7 @@ def AverageTest(FilePath,
 
         ##This is for QCAD
         my_pr_auc, my_roc_score, P_at_n_value, duration1, duration3, TempDataSet = QCAD(MyDataSet, AllColsWithTruth, MyContextList, MyBehaveList, 
-                                                                                        neighbour_value, anomaly_value, sample_value)
+                                                                                        neighbour_value, sample_value)
         
         myResult_QCAD.loc[len(myResult_QCAD)] = [neighbour_value, my_pr_auc, my_roc_score, P_at_n_value, duration1, duration3, MyRandomState]
     
