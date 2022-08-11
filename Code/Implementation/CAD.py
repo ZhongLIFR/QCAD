@@ -5,7 +5,9 @@ Created on Mon Oct 18 17:32:29 2021
 
 @author: zlifr
 
-Reproduce Conditional Anomaly Detection
+Reproduce Conditional Anomaly Detection.
+
+Note that CAD usually takes a very long time (days to weeks) to execute even on a medium dataset.
 
 """
 ##You must specify AbsRootDir by yourself !!!!!!!!

@@ -6,6 +6,9 @@ Created on Mon Oct 11 14:39:44 2021
 @author: zlifr
 """
 
+##You must specify AbsRootDir by yourself !!!!!!!!
+AbsRootDir = '/Users/zlifr/Documents/GitHub' 
+
 # =============================================================================
 # Step I. call off-the-shelf models that are implemented in PyOD
 # =============================================================================
@@ -27,6 +30,31 @@ from pyod.models.sod import SOD ## subspace outlier detection
 
 
 def PyODModel(RawDataSet, sample_value, ADetector):
+    """
+
+    Parameters
+    ----------
+    RawDataSet : dataframe
+        dataframe containing raw dataset after preprocessing.
+    sample_value : int
+        the number of anomalies.
+    ADetector : string
+        the name of Anomaly Detector.
+
+    Returns
+    -------
+    my_pr_auc : double
+        pr auc score.
+    my_roc_score : double
+        roc auc score.
+    P_at_n_value : double
+        p@n score.
+    duringtime1 : double
+        training time. Not used.
+    duringtime2 : double
+        training + testing time. Not used
+        
+    """
     
     # X_train =  RawDataSet.iloc[:, 1:-2] ##Not for average
     X_train =  RawDataSet.iloc[:, 0:-1]
@@ -95,14 +123,15 @@ def PyODModel(RawDataSet, sample_value, ADetector):
 # ## Step1: load dataset and set parameters
 # ##########################################
 
-# RawDataSet = pd.read_csv("/Users/zlifr/Desktop/HHBOS/Data3/powerGene.csv", sep=",")
-# X_train =  RawDataSet.iloc[:, 1:-2]
-# sample_value = 500
+RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/powerGene.csv'
+RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
+X_train =  RawDataSet.iloc[:, 1:-2]
+sample_value = 500
 
 # ##########################################
 # ## Step2: call PyODModel function to get results
 # ##########################################
     
-# PyODModel(RawDataSet, sample_value, HBOS())
+PyODModel(RawDataSet, sample_value, HBOS())
 
 
