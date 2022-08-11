@@ -123,15 +123,15 @@ def PyODModel(RawDataSet, sample_value, ADetector):
 # ## Step1: load dataset and set parameters
 # ##########################################
 
-RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/powerGene.csv'
-RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
-X_train =  RawDataSet.iloc[:, 1:-2]
-sample_value = 500
+# RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/powerGene.csv'
+# RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
+# X_train =  RawDataSet.iloc[:, 1:-2]
+# sample_value = 500
 
 # ##########################################
 # ## Step2: call PyODModel function to get results
 # ##########################################
-    
-PyODModel(RawDataSet, sample_value, HBOS())
+
+# PyODModel(RawDataSet, sample_value, HBOS())
 
 

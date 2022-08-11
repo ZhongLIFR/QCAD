@@ -3,14 +3,45 @@
 """
 Created on Thu Nov 18 09:26:57 2021
 
-@author: zlifr
+Reproduce LoPAD[Sha, et al.]
+
+@author: zlifr, z.li@liacs.leidenuniv.nl
+
 """
+##You must specify AbsRootDir by yourself !!!!!!!!
+AbsRootDir = '/Users/zlifr/Documents/GitHub' 
 
 # =============================================================================
 # Step I. implement LoPAD
 # =============================================================================
 
 def LoPAD(RawDataSet, MB_dataset_path, sample_value):
+    """
+
+    Parameters
+    ----------
+    RawDataSet : dataframe
+        dataframe containing raw dataset after preprocessing.
+    MB_dataset_path : string
+        file path containing the Markov Blankets of correspoding dataset.
+    sample_value : int
+        the number of anomalies.
+
+    Returns
+    -------
+    my_pr_auc : double
+        pr auc score.
+    my_roc_score : double
+        roc auc score.
+    P_at_n_value : double
+        p@n score.
+    duringtime1 : double
+        training time. Not used.
+    duringtime2 : double
+        training + testing time. Not used
+        
+    """
+    
     ##############################################################################
     ##Step 1.1. Load Dataset
     ##############################################################################
@@ -182,8 +213,9 @@ def LoPAD(RawDataSet, MB_dataset_path, sample_value):
 # ##########################################
 
 # import pandas as pd
-# RawDataSet = pd.read_csv("/Users/zlifr/Desktop/HHBOS/Data3/bostonGene.csv", sep=",")
-# MB_dataset_path = r"/Users/zlifr/Desktop/HHBOS/Data3/MB/bostonGene.csv"
+# RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/bostonGene.csv'
+# RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
+# MB_dataset_path = AbsRootDir+r'/QCAD/Data/GenData/MB/bostonGene.csv'
 # sample_value = 50
 
 # ##########################################
@@ -191,3 +223,5 @@ def LoPAD(RawDataSet, MB_dataset_path, sample_value):
 # ##########################################
 
 # LoPAD(RawDataSet, MB_dataset_path, sample_value)
+
+## If reporting error "ValueError: Length mismatch", please uncomment the block from lines 70 to 78
