@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore")
 AbsRootDir = '/Users/zlifr/Documents/GitHub' 
 
 # =============================================================================
-# #Step I. implement QCAD
+# #Step I. Implement QCAD
 # =============================================================================
 
 import pandas as pd
@@ -389,32 +389,32 @@ def QCAD(RawDataSet, MyColList, MyContextList, MyBehaveList, neighbour_value, sa
 # ## Step1: load dataset and set parameters
 # ##########################################
 
-RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/abaloneGene.csv'
-RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
-RawDataSet = RawDataSet.dropna()  #remove missing values
+# RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/abaloneGene.csv'
+# RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
+# RawDataSet = RawDataSet.dropna()  #remove missing values
 
-MyColList = ['Sex', 'Length', 'Diameter', 'Height', 'Whole weight', 'Shucked weight',
-              'Viscera weight', 'Shell weight', 'Rings',
-              "ground_truth"]
+# MyColList = ['Sex', 'Length', 'Diameter', 'Height', 'Whole weight', 'Shucked weight',
+#               'Viscera weight', 'Shell weight', 'Rings',
+#               "ground_truth"]
 
-MyContextList = ['Sex', 'Length', 'Diameter', 'Height']
+# MyContextList = ['Sex', 'Length', 'Diameter', 'Height']
 
-MyBehaveList = ['Whole weight', 'Shucked weight','Viscera weight', 'Shell weight', 'Rings']
+# MyBehaveList = ['Whole weight', 'Shucked weight','Viscera weight', 'Shell weight', 'Rings']
 
-neighbour_value = 2090
+# neighbour_value = 2090
 
-sample_value = 418
+# sample_value = 418
 
 
 # ##########################################
 # ## Step2: call QCAD function to get results
 # ##########################################
 
-my_pr_auc, my_roc_score, P_at_n_value, duration1, duration3, MyDataSet= QCAD(RawDataSet, MyColList, MyContextList, MyBehaveList, 
-                                                                             neighbour_value, sample_value)
+# my_pr_auc, my_roc_score, P_at_n_value, duration1, duration3, MyDataSet= QCAD(RawDataSet, MyColList, MyContextList, MyBehaveList, 
+#                                                                              neighbour_value, sample_value)
 
 
-print(my_pr_auc,my_roc_score,P_at_n_value)
+# print(my_pr_auc,my_roc_score,P_at_n_value)
 
 
 
