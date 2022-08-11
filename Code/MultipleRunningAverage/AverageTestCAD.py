@@ -50,13 +50,12 @@ def AverageTestCAD(FilePath,
         
         MyDataSet = FinalDataSet[AllColsWithTruth]
         
-        MyBehaveList = BehaveCols
            
         #for each dataset, calculate score
         
         ##This is for CAD
         is_model_learned = 0
-        FilePath_MappingMatrix = AbsRootDir + r'/QCAD/Data/TempFiles/abalone_CAD_mapping_matrix.npy'
+        FilePath_MappingMatrix = AbsRootDir + r'/QCAD/Data/TempFiles/temp_CAD_mapping_matrix.npy'
         num_gau_comp = 5
         alpha_log = 0.001
         
@@ -80,8 +79,8 @@ def AverageTestCAD(FilePath,
     myResult2['duration1_std'] = myResult2['duration1'].groupby(myResult2['neighbour_value']).transform('std')
     myResult2['duration3_std'] = myResult2['duration3'].groupby(myResult2['neighbour_value']).transform('std')
         
-    myResult_ICAD = myResult2.drop_duplicates()
-    myResult_ICAD.to_csv(SaveFilePath_CAD, sep=',')
+    myResult_CAD = myResult2.drop_duplicates()
+    myResult_CAD.to_csv(SaveFilePath_CAD, sep=',')
     
 # =============================================================================
 # Step 2. Example ->  Abalone
