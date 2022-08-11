@@ -9,6 +9,8 @@ Created on Tue Dec 28 10:17:24 2021
 import warnings
 warnings.filterwarnings("ignore")
 
+##You must specify AbsRootDir by yourself !!!!!!!!
+AbsRootDir = '/Users/zlifr/Documents/GitHub' 
 
 # =============================================================================
 # #Step I. implement QCAD
@@ -37,7 +39,40 @@ from skgarden import RandomForestQuantileRegressor
 
 
     
-def ICAD(RawDataSet, MyColList, MyContextList, MyBehaveList, neighbour_value, anomaly_value, sample_value):
+def QCAD(RawDataSet, MyColList, MyContextList, MyBehaveList, neighbour_value, sample_value):
+    """
+
+    Parameters
+    ----------
+    RawDataSet : dataframe
+        dataframe containing raw dataset after preprocessing.
+    MyColList : TYPE
+        the list of all feature names.
+    MyContextList : TYPE
+        the list of contextual feature names.
+    MyBehaveList : TYPE
+       the list of behavioural feature names.
+    neighbour_value : int
+        the number of neighbours.
+    sample_value : int
+        the number of anomalies.
+        
+        
+    Returns
+    -------
+    my_pr_auc : double
+        pr auc score.
+    my_roc_score : double
+        roc auc score.
+    P_at_n_value : double
+        p@n score.
+    duringtime1 : double
+        data pre-processing time. 
+    duringtime3 : double
+        anomaly detection time. 
+    MyDataSet : dataframe
+        dataframe containing raw dataset and anomaly scores.
+    """
     
     ###############################################################################
     ###############################################################################
@@ -79,12 +114,60 @@ def ICAD(RawDataSet, MyColList, MyContextList, MyBehaveList, neighbour_value, an
     ##Step3 calculate  anomaly  score in behavioral  space for each point
     
     def QRF_score(ReferenceDataSet, MyColList, MyContextList, MyBehaveList, step_width, new_point_index):
+        """
+        
+        Parameters
+        ----------
+        ReferenceDataSet : dataframe
+            dataframe that contains the neighbours of an instance.
+        MyColList : list
+            the list of all feature names.
+        MyContextList : list
+            the list of all contextual feature names.
+        MyBehaveList : list
+            the list of all behavioural feature names.
+        step_width : int
+            int value used to specifiy the number of quantiles such that 100/step_width must be an int.
+        new_point_index : int
+            index of newly considered instance.
+
+        Returns
+        -------
+        anomaly_behave : list
+            list containing anomaly scores.
+            
+        """
     
         MyDataSet = ReferenceDataSet[MyColList]
         MyContextDataSet = MyDataSet[MyContextList]
         MyBehaveDataSet = MyDataSet[MyBehaveList]
                 
         def QuantilePerCol(X_train, X_test, y_train, y_test, step_width):
+            """
+            
+            Parameters
+            ----------
+            X_train : dataframe
+                contextual feature values of the reference group.
+            X_test : dataframe
+                contextual feature values of the target object.
+            y_train : dataframe
+                behavioural feature values of the reference group.
+            y_test : dataframe
+                behavioural feature values of target object.
+            step_width : int
+                int value used to specifiy the number of quantiles uch that 100/step_width must be an int.
+
+            Returns
+            -------
+            quantile_location : int
+                estimated quantile location.
+            quantile_diff : double
+                scaled anomaly score.
+            quantile_rank : int
+                ranking of quantile location, not used.
+
+            """
             
             rfqr = RandomForestQuantileRegressor(random_state=0, min_samples_split=10, n_estimators=10)
             
@@ -306,35 +389,32 @@ def ICAD(RawDataSet, MyColList, MyContextList, MyBehaveList, neighbour_value, an
 # ## Step1: load dataset and set parameters
 # ##########################################
 
+RawDataSetPath = AbsRootDir+r'/QCAD/Data/GenData/abaloneGene.csv'
+RawDataSet = pd.read_csv(RawDataSetPath, sep=",")
+RawDataSet = RawDataSet.dropna()  #remove missing values
 
-# RawDataSet = pd.read_csv("/Users/zlifr/Desktop/HHBOS/Data3/abaloneGene.csv", sep=",")
+MyColList = ['Sex', 'Length', 'Diameter', 'Height', 'Whole weight', 'Shucked weight',
+              'Viscera weight', 'Shell weight', 'Rings',
+              "ground_truth"]
 
-# RawDataSet = RawDataSet.dropna()  #remove missing values
+MyContextList = ['Sex', 'Length', 'Diameter', 'Height']
 
-# MyColList = ['Sex', 'Length', 'Diameter', 'Height', 'Whole weight', 'Shucked weight',
-#               'Viscera weight', 'Shell weight', 'Rings',
-#               "ground_truth"]
+MyBehaveList = ['Whole weight', 'Shucked weight','Viscera weight', 'Shell weight', 'Rings']
 
-# MyContextList = ['Sex', 'Length', 'Diameter', 'Height']
+neighbour_value = 2090
 
-# MyBehaveList = ['Whole weight', 'Shucked weight','Viscera weight', 'Shell weight', 'Rings']
-
-# neighbour_value = 2090
-
-# anomaly_value = 418
-
-# sample_value = 418
+sample_value = 418
 
 
 # ##########################################
 # ## Step2: call QCAD function to get results
 # ##########################################
 
-# my_pr_auc, my_roc_score, P_at_n_value, duration1, duration3, MyDataSet= QCAD(RawDataSet, MyColList, MyContextList, MyBehaveList, 
-#                                                                                   neighbour_value, anomaly_value, sample_value)
+my_pr_auc, my_roc_score, P_at_n_value, duration1, duration3, MyDataSet= QCAD(RawDataSet, MyColList, MyContextList, MyBehaveList, 
+                                                                             neighbour_value, sample_value)
 
 
-# print(my_pr_auc,my_roc_score,P_at_n_value)
+print(my_pr_auc,my_roc_score,P_at_n_value)
 
 
 
