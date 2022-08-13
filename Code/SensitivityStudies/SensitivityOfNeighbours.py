@@ -9,13 +9,13 @@ Created on Tue Dec 14 07:55:50 2021
 ##You must specify AbsRootDir by yourself !!!!!!!!
 AbsRootDir = '/Users/zlifr/Documents/GitHub'  
 
-import warnings
-warnings.filterwarnings("ignore")
-
 
 # =============================================================================
 # #Step1 Import related modules
 # =============================================================================
+
+import warnings
+warnings.filterwarnings("ignore")
 
 import pandas as pd
 import matplotlib.pyplot as plt
