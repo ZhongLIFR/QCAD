@@ -34,9 +34,6 @@ from ContextualAnomalyInject import GenerateData
 from QCAD import QCAD
 
 
-from ContextualAnomalyInject import GenerateData
-from QCAD import QCAD
-
 
 
 
