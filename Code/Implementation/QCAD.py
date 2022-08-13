@@ -46,11 +46,11 @@ def QCAD(RawDataSet, MyColList, MyContextList, MyBehaveList, neighbour_value, sa
     ----------
     RawDataSet : dataframe
         dataframe containing raw dataset after preprocessing.
-    MyColList : TYPE
+    MyColList : list
         the list of all feature names.
-    MyContextList : TYPE
+    MyContextList : list
         the list of contextual feature names.
-    MyBehaveList : TYPE
+    MyBehaveList : list
        the list of behavioural feature names.
     neighbour_value : int
         the number of neighbours.

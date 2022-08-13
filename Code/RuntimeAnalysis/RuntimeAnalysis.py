@@ -131,10 +131,10 @@ def RuntimeAnalysis(FilePath,
         print("dur_LOPAD")
         print(dur_LOPAD)
         
-        ##This is for ICAD_QRF
+        ##This is for QCAD
         QCAD_time_start = time()              
         QCAD(MyDataSet, AllColsWithTruth, MyContextList, MyBehaveList, 
-             neighbour_value, anomaly_value, sample_value)
+             neighbour_value, sample_value)
         
         QCAD_time_end = time()
         dur_QCAD = round(QCAD_time_end - QCAD_time_start, ndigits=4)
