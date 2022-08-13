@@ -5,13 +5,18 @@ Created on Sun Jan 16 14:18:05 2022
 
 @author: zlifr
 """
+##You must specify AbsRootDir by yourself !!!!!!!!
+AbsRootDir = '/Users/zlifr/Documents/GitHub'  
+
 
 import warnings
 warnings.filterwarnings("ignore")
 
+
 # =============================================================================
-# #Step1 import basic functions
+# #Step1 import basic modules
 # =============================================================================
+
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -39,32 +44,72 @@ from pyod.models.sod import SOD ## subspace outlier detection
 # =============================================================================
 # #Step2 import sef-defined funtions
 # =============================================================================
-# from ContextualAnomalyInject import GenerateData
-from ContextualAnomalyInjectFinal import GenerateData
-from RICAD_QRF import ICAD_QRF
+
+import sys
+ImpleDir = AbsRootDir+ r'/QCAD/Code/Implementation'
+UtilityDir = AbsRootDir+ r'/QCAD/Code/Utilities'
+sys.path.append(ImpleDir)
+sys.path.append(UtilityDir)
+
+from ContextualAnomalyInject import GenerateData
+from QCAD import QCAD
 from PyODTest import PyODModel
 from LoPAD import LoPAD
 from ROCOD import ROCOD
 from COD import COD
 
 
-
 # =============================================================================
-# ##Step3 Calculate snomaly score based on given datasets
+# ##Step3 Define a funtion to compare running time
 # =============================================================================
 
-##def a function to do sensitivity analysis
-def RuntimeSampleSize(FilePath,
-                      ResultFilePath, 
-                      MB_dataset_path,
-                      MyColList, AllColsWithTruth, MyContextList, MyBehaveList, 
-                      NumCols, anomaly_value, sample_value, neighbour_value,
-                      num_dataset):
+##def a function to do running time analysis
+def RuntimeAnalysis(FilePath,
+                    ResultFilePath, 
+                    MB_dataset_path,
+                    MyColList, AllColsWithTruth, MyContextList, MyBehaveList, 
+                    NumCols, anomaly_value, sample_value, neighbour_value,
+                    num_dataset):
+    """
+
+    Parameters
+    ----------
+    FilePath : string
+        the path of raw dataset.
+    ResultFilePath : string
+        the path of resulting dataset.
+    MB_dataset_path : string
+        the path of MB used in LoPAD.
+    MyColList : list
+        the list of all feature names.
+    AllColsWithTruth : list
+        the list of all feature names and ground-truth.
+    MyContextList : list
+        the list of contextual feature names.
+    MyBehaveList : list
+       the list of behavioural feature names.
+    NumCols : list
+        the list of numerical contextual feature names.
+    anomaly_value : int
+        the number of anomalies.
+    sample_value : int
+        the number of anomalies.
+    neighbour_value : int
+        the number of neighbours.
+    num_dataset : int
+        the number of trials.
+
+    Returns
+    -------
+    mean_time_list : TYPE
+        DESCRIPTION.
+
+    """
     
     import pandas as pd
     from time import time
     
-    result_time_df = pd.DataFrame(columns=["RICAD", "LOPAD", "ROCOD", "CAD", "IForest", "LOF", "KNN", "SOD", "HBOS"])
+    result_time_df = pd.DataFrame(columns=["QCAD", "LOPAD", "ROCOD", "CAD", "IForest", "LOF", "KNN", "SOD", "HBOS"])
    
     #generate different datasets by using different random state
     for MyRandomState in range(42,42+num_dataset):
@@ -87,13 +132,13 @@ def RuntimeSampleSize(FilePath,
         print(dur_LOPAD)
         
         ##This is for ICAD_QRF
-        ICAD_time_start = time()              
-        ICAD_QRF(MyDataSet, AllColsWithTruth, MyContextList, MyBehaveList, 
-                 neighbour_value, anomaly_value, sample_value)
+        QCAD_time_start = time()              
+        QCAD(MyDataSet, AllColsWithTruth, MyContextList, MyBehaveList, 
+             neighbour_value, anomaly_value, sample_value)
         
-        ICAD_time_end = time()
-        dur_ICAD = round(ICAD_time_end - ICAD_time_start, ndigits=4)
-        time_vec.append(dur_ICAD)
+        QCAD_time_end = time()
+        dur_QCAD = round(QCAD_time_end - QCAD_time_start, ndigits=4)
+        time_vec.append(dur_QCAD)
         
         
         ##This is for ROCOD
@@ -108,8 +153,9 @@ def RuntimeSampleSize(FilePath,
         
         ##This is for CAD
         COD_time_start = time()        
+        FilePath_MappingMatrix = AbsRootDir + r'/QCAD/Data/TempFiles/temp_CAD_mapping_matrix_RT.npy'
         COD(MyDataSet, MyContextList, MyBehaveList,
-            5, 0.01, 0, r'/Users/zlifr/Desktop/HHBOS/TrainedModel/COD/mapping_matrix_EnergyGene.npy')        
+            5, 0.01, 0, FilePath_MappingMatrix)        
         COD_time_end = time()
         dur_COD = round(COD_time_end - COD_time_start, ndigits=4)         
         time_vec.append(dur_COD)
@@ -150,7 +196,7 @@ def RuntimeSampleSize(FilePath,
         time_vec.append(dur_HBOS) 
                 
         ##Add all values        
-        time_new_df = pd.DataFrame([time_vec], columns=["RICAD", "LOPAD", "ROCOD", "CAD", "IForest", "LOF", "KNN", "SOD", "HBOS"])
+        time_new_df = pd.DataFrame([time_vec], columns=["QCAD", "LOPAD", "ROCOD", "CAD", "IForest", "LOF", "KNN", "SOD", "HBOS"])
 
         result_time_df = pd.concat([result_time_df, time_new_df])
         
@@ -159,73 +205,13 @@ def RuntimeSampleSize(FilePath,
 
     return mean_time_list
     
+
 # =============================================================================
-# #Step4 generate synthetic datasets to test
+# ##Step4 Example -> it may take several weeks to accomplish the execution 
+#                    by varying the number of contextual features, behavioural features
+#                    or the number of samples, respectively.
 # =============================================================================
-from SyntheticDataFinal import GenSynDataset
 
-result_time_df = pd.DataFrame(columns=["RICAD", "LOPAD", "ROCOD", "CAD", "IForest", "LOF", "KNN", "SOD", "HBOS"])
-test_range = range(5,200,5)
-
-for behave_feature_size in test_range:
-    
-    num_con_value = 5
-    num_con_cat_value = 2
-    
-    num_behave_value = behave_feature_size
-            
-    sample_size_value = 500
-    
-    MyDataSet = GenSynDataset(num_con =num_con_value , num_con_cat = num_con_cat_value, num_behave = num_behave_value,
-                              sample_size = sample_size_value, num_gaussian = 5, my_scheme = "S1")
-    MyDataSet.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/Runtime/SynDataSet2.csv", sep=',')
-    
-        
-    FilePath = r"/Users/zlifr/Desktop/HHBOS/SynData/Runtime/SynDataSet2.csv"
-    ResultFilePath = r"/Users/zlifr/Desktop/HHBOS/SynData/Runtime/SynDataSetGene2.csv"
-    MB_dataset_path = r"/Users/zlifr/Desktop/HHBOS/SynData/Runtime/SynDataSetMB2.csv"
-    
-    AllCols = list(MyDataSet.columns)
-    AllColsWithTruth = AllCols.copy()
-    AllColsWithTruth.append('ground_truth')
-    
-    ContextCols = list(MyDataSet.columns[0:num_con_value])
-    BehaveCols = list(MyDataSet.columns[num_con_value:])
-    NumCols = BehaveCols
-    anomaly_value = 50
-    sample_value = 50
-    neighbour_value = min(int(sample_size_value/2), 500)
-    num_dataset = 1
-    
-    # #Generate MB manually
-    total_cols = num_con_value + num_behave_value
-    
-    col_vec = ["con_num0"]*total_cols
-        
-    MB_df = pd.DataFrame(col_vec, columns=["a"])
-    
-    MB_df.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/Runtime/SynDataSetMB2.csv", sep=',', header=False, index=False)  
-    
-    #execute the function
-    result_time_list = RuntimeSampleSize(FilePath,
-                                       ResultFilePath,
-                                       MB_dataset_path,
-                                       AllCols, AllColsWithTruth, ContextCols, BehaveCols, NumCols, 
-                                       anomaly_value, sample_value, neighbour_value, num_dataset)
-        
-    new_df = pd.DataFrame([result_time_list], columns=["RICAD", "LOPAD", "ROCOD", "CAD", "IForest", "LOF", "KNN", "SOD", "HBOS"])
-    result_time_df = pd.concat([result_time_df, new_df])
-
-result_time_df["BehaveFeatureSize"] = list(test_range)
-result_time_df.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/Runtime/BehaveResult.csv", sep=',') 
- 
-test_range = range(5,145,5)
-result_time_df["BehaveFeatureSize"] = list(test_range)
-result_time_df.to_csv("/Users/zlifr/Desktop/HHBOS/SynData/Runtime/BehaveResult.csv", sep=',') 
-##to display results
-# import seaborn as sns
-# result_time_df_final = result_time_df.melt('BehaveFeatureSize', var_name='cols', value_name='vals')
-# sns.catplot(x="BehaveFeatureSize", y="vals", hue='cols', style = "cols", data=result_time_df_final, kind='point')
 
 
 
