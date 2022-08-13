@@ -31,9 +31,7 @@ Specifcially, the Code folder contains the following sub-folders:
 - *AblationStuides*: which investigate the impacts of different components on detection performance.
   - **AblationStudy.py**: conduct two ablation stuides.
 - *RuntimeAnalysis*: which inspects the computational cost of **QCAD** and **CAD**.
-  - **RuntimeBehave.py**: inspect the running time by varying the number of behaviroual features.
-  - **RuntimeContext.py**: inspect the running time by varying the number of contextual features.
-  - **RuntimeSample.py**: inspect the running time by varying the number of samples.
+  - **RuntimeAnalysis.py**: inspect the running time by varying the number of behaviroual features, contextual features or samples, respectively.
 - *SensitivityStudies*: which investigate the impact of parameter *k*.
   - **SensitivityOfNeighbours.py**: inspect the detection accuracy in terms of RUC AUC, PR AUC, P@n by varying the number of neighbours.
 
