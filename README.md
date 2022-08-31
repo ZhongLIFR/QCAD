@@ -1,5 +1,5 @@
-# QCAD
-Paper submitted to DAMI (Data Mining and Knowledge Discovery journal)
+# QCAD: Robust and Explainable Contextual Anomaly Detection using Quantile Regression Forests
+A paper submitted to DAMI (Data Mining and Knowledge Discovery journal)
 
 ## Repo Structure
 
@@ -40,7 +40,7 @@ Specifcially, the Code folder contains the following sub-folders:
 Specifcially, the Data folder contains the following sub-folders:
 
 - *RawData*: 20 real-world datasets without contextual anomalies (assumption)
-- *SynData*: 10 synthetic datasets withous contextual anomalies
+- *SynData*: 10 synthetic datasets without contextual anomalies
 - *GenData*: 20 real-world datasets with injected contextual anomalies, 10 synthetic datasets with contextual anomalies, and the Markov Blankets of these 30 datasets in the subfolder ~/MB/
 - *Examples*: the football dataset with unkown real-world contextual anomalies
 - *TempFiles*: temporary or intermediate results
