@@ -1,6 +1,9 @@
 # QCAD: Robust and Explainable Contextual Anomaly Detection using Quantile Regression Forests
 A paper submitted to DAMI (Data Mining and Knowledge Discovery journal)
 
+[![DOI](https://zenodo.org/badge/518587941.svg)](https://zenodo.org/badge/latestdoi/518587941)
+
+
 ## Repo Structure
 
 the QCAD repo includes two folders, Code and Data.
