@@ -1,5 +1,5 @@
 # QCAD: Robust and Explainable Contextual Anomaly Detection using Quantile Regression Forests
-A paper submitted to DAMI (Data Mining and Knowledge Discovery journal)
+Paper accepted by DAMI (Data Mining and Knowledge Discovery journal) for publication (July 2023).
 
 [![DOI](https://zenodo.org/badge/518587941.svg)](https://zenodo.org/badge/latestdoi/518587941)
 
